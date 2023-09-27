@@ -9,14 +9,32 @@ public class Main {
         // Take input from user
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Principal loan: ");
-        int principal = scanner.nextInt();
+        int principal;
+        while (true) {
+            System.out.print("Principal loan (£1K - £1M): ");
+            principal = scanner.nextInt();
+            if (principal >= 1000 && principal <= 1_000_000)
+                break;
+            System.out.println("Enter a number between 1,000 and 1,000,000.");
+        }
 
-        System.out.print("Annual Interest Rate: ");
-        float annualInterestRate = scanner.nextFloat();
+        float annualInterestRate;
+        while (true) {
+            System.out.print("Annual Interest Rate: ");
+            annualInterestRate = scanner.nextFloat();
+            if (annualInterestRate > 0 && annualInterestRate <= 30)
+                break;
+            System.out.println("Enter a number greater than 0 and less than or equal to 30.");
+        }
 
-        System.out.print("Period (Years): ");
-        int years = scanner.nextInt();
+        int years;
+        while (true) {
+            System.out.print("Period (Years): ");
+            years = scanner.nextInt();
+            if (years >= 1 && years <= 30)
+                break;
+            System.out.println("Enter a number between 1 and 30.");
+        }
 
 
         // Calculate mortgage
