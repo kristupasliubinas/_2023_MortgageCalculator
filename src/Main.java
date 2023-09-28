@@ -3,9 +3,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final byte MONTHS_IN_YEAR = 12;
-        final byte PERCENT = 100;
-
         // Take input from user
         Scanner scanner = new Scanner(System.in);
 
@@ -38,15 +35,25 @@ public class Main {
 
 
         // Calculate mortgage
-        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
-        int numberOfPayments = years * MONTHS_IN_YEAR;
-        double mortgage = principal *
-                (monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments))
-                / (Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1);
+        double mortgage = calculateMortgage(principal, annualInterestRate, years);
 
 
         // Present result on the console screen
         String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println("Mortgage monthly payment: " + formattedResult);
+    }
+
+    public static double calculateMortgage(int principal, float annualInterestRate, int years) {
+        final byte MONTHS_IN_YEAR = 12;
+        final byte PERCENT = 100;
+
+        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
+        int numberOfPayments = years * MONTHS_IN_YEAR;
+
+        double mortgage = principal *
+                (monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments))
+                / (Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1);
+
+        return mortgage;
     }
 }
