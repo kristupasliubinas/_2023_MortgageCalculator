@@ -4,43 +4,31 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // Take input from user
-        Scanner scanner = new Scanner(System.in);
-
-        int principal;
-        while (true) {
-            System.out.print("Principal loan (£1K - £1M): ");
-            principal = scanner.nextInt();
-            if (principal >= 1000 && principal <= 1_000_000)
-                break;
-            System.out.println("Enter a number between 1,000 and 1,000,000.");
-        }
-
-        float annualInterestRate;
-        while (true) {
-            System.out.print("Annual Interest Rate: ");
-            annualInterestRate = scanner.nextFloat();
-            if (annualInterestRate > 0 && annualInterestRate <= 30)
-                break;
-            System.out.println("Enter a number greater than 0 and less than or equal to 30.");
-        }
-
-        int years;
-        while (true) {
-            System.out.print("Period (Years): ");
-            years = scanner.nextInt();
-            if (years >= 1 && years <= 30)
-                break;
-            System.out.println("Enter a number between 1 and 30.");
-        }
-
+        int principal = (int) readInput("Principal loan (£1K - £1M): ", 1000, 1_000_000);
+        float annualInterestRate = (float) readInput("Annual Interest Rate: ", 1, 30);
+        int years = (int) readInput("Period (Years): ", 1, 30);
 
         // Calculate mortgage
         double mortgage = calculateMortgage(principal, annualInterestRate, years);
 
-
         // Present result on the console screen
         String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println("Mortgage monthly payment: " + formattedResult);
+    }
+
+    public static double readInput(String inputMessage, double min, double max) {
+        double input;
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print(inputMessage);
+            input = scanner.nextDouble();
+            if (input >= min && input <= max)
+                break;
+            System.out.println("Enter a number between " + min + " and " + max + ".");
+        }
+
+        return input;
     }
 
     public static double calculateMortgage(int principal, float annualInterestRate, int years) {
