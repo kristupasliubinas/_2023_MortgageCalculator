@@ -2,6 +2,7 @@ import java.text.NumberFormat;
 
 public class Report {
     final byte MONTHS_IN_YEAR = 12;
+
     private Mortgage mortgage;
 
     public Report(Mortgage mortgage) {

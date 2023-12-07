@@ -1,6 +1,6 @@
 public class Mortgage {
-    final static byte MONTHS_IN_YEAR = 12;
-    final static byte PERCENT = 100;
+    final byte MONTHS_IN_YEAR = 12;
+    final byte PERCENT = 100;
 
     private int principal;
     private float annualInterestRate;
