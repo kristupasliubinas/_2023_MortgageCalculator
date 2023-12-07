@@ -13,7 +13,7 @@ public class Main {
         var mortgage = new Mortgage(principal, annualInterestRate, years);
 
         printMortgage(mortgage);
-        printBalance(principal, annualInterestRate, years);
+        printBalance(mortgage);
     }
 
     public static double readInput(String inputMessage, double min, double max) {
@@ -31,29 +31,17 @@ public class Main {
         return input;
     }
 
-    public static double calculateBalance(int principal, float annualInterestRate, int years, int numberOfPaymentsMade)
-    {
-        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
-        int numberOfPayments = years * MONTHS_IN_YEAR;
-
-        double remainingBalance = principal *
-                (Math.pow((1 + monthlyInterestRate), numberOfPayments) - Math.pow((1 + monthlyInterestRate), numberOfPaymentsMade)) /
-                (Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1);
-
-        return remainingBalance;
-    }
-
     private static void printMortgage(Mortgage mortgage) {
         System.out.println("\nMORTGAGE\n--------");
         String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage.calculateMortgage());
         System.out.println("Monthly Payments: " + formattedResult);
     }
 
-    private static void printBalance(int principal, float annualInterestRate, int years) {
+    private static void printBalance(Mortgage mortgage) {
         System.out.println("\nREMAINING BALANCE\n----------------");
         double balance;
-        for (short month = 1; month <= years * MONTHS_IN_YEAR; month++) {
-            balance = calculateBalance(principal, annualInterestRate, years, month);
+        for (short month = 1; month <= mortgage.getYears() * MONTHS_IN_YEAR; month++) {
+            balance = mortgage.calculateBalance(month);
             System.out.println("After Payment " + month + ": " + NumberFormat.getCurrencyInstance().format(balance));
         }
     }

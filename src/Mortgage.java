@@ -23,6 +23,18 @@ public class Mortgage {
         return mortgage;
     }
 
+    public double calculateBalance(int numberOfPaymentsMade)
+    {
+        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
+        int numberOfPayments = years * MONTHS_IN_YEAR;
+
+        double remainingBalance = principal *
+                (Math.pow((1 + monthlyInterestRate), numberOfPayments) - Math.pow((1 + monthlyInterestRate), numberOfPaymentsMade)) /
+                (Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1);
+
+        return remainingBalance;
+    }
+
     private void setPrincipal(int principal) {
         if (principal <= 0)
             throw new IllegalArgumentException("Principal loan cannot be 0 or less.");
@@ -39,5 +51,9 @@ public class Mortgage {
         if (years <= 0 )
             throw new IllegalArgumentException("Loan period in years cannot be 0 or less.");
         this.years = years;
+    }
+
+    public int getYears() {
+        return years;
     }
 }
