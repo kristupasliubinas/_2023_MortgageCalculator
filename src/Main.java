@@ -11,9 +11,7 @@ public class Main {
         int years = (int) readInput("Period (Years): ", 1, 30);
 
         var mortgage = new Mortgage(principal, annualInterestRate, years);
-
-        printMortgage(mortgage);
-        printBalance(mortgage);
+        var report = new Report(mortgage);
     }
 
     public static double readInput(String inputMessage, double min, double max) {
@@ -29,20 +27,5 @@ public class Main {
         }
 
         return input;
-    }
-
-    private static void printMortgage(Mortgage mortgage) {
-        System.out.println("\nMORTGAGE\n--------");
-        String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage.calculateMortgage());
-        System.out.println("Monthly Payments: " + formattedResult);
-    }
-
-    private static void printBalance(Mortgage mortgage) {
-        System.out.println("\nREMAINING BALANCE\n----------------");
-        double balance;
-        for (short month = 1; month <= mortgage.getYears() * MONTHS_IN_YEAR; month++) {
-            balance = mortgage.calculateBalance(month);
-            System.out.println("After Payment " + month + ": " + NumberFormat.getCurrencyInstance().format(balance));
-        }
     }
 }
