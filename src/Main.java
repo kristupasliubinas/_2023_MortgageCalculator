@@ -10,7 +10,9 @@ public class Main {
         float annualInterestRate = (float) readInput("Annual Interest Rate: ", 1, 30);
         int years = (int) readInput("Period (Years): ", 1, 30);
 
-        printMortgage(principal, annualInterestRate, years);
+        var mortgage = new Mortgage(principal, annualInterestRate, years);
+
+        printMortgage(mortgage);
         printBalance(principal, annualInterestRate, years);
     }
 
@@ -29,17 +31,6 @@ public class Main {
         return input;
     }
 
-    public static double calculateMortgage(int principal, float annualInterestRate, int years) {
-        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
-        int numberOfPayments = years * MONTHS_IN_YEAR;
-
-        double mortgage = principal *
-                (monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments))
-                / (Math.pow((1 + monthlyInterestRate), numberOfPayments) - 1);
-
-        return mortgage;
-    }
-
     public static double calculateBalance(int principal, float annualInterestRate, int years, int numberOfPaymentsMade)
     {
         float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
@@ -52,10 +43,9 @@ public class Main {
         return remainingBalance;
     }
 
-    private static void printMortgage(int principal, float annualInterestRate, int years) {
-        double mortgage = calculateMortgage(principal, annualInterestRate, years);
+    private static void printMortgage(Mortgage mortgage) {
         System.out.println("\nMORTGAGE\n--------");
-        String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage);
+        String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage.calculateMortgage());
         System.out.println("Monthly Payments: " + formattedResult);
     }
 
