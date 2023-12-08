@@ -1,8 +1,6 @@
 import java.text.NumberFormat;
 
 public class Report {
-    final byte MONTHS_IN_YEAR = 12;
-
     private Mortgage mortgage;
 
     public Report(Mortgage mortgage) {
@@ -19,10 +17,10 @@ public class Report {
 
     private void printBalance() {
         System.out.println("\nREMAINING BALANCE\n----------------");
-        double balance;
-        for (short month = 1; month <= mortgage.getYears() * MONTHS_IN_YEAR; month++) {
-            balance = mortgage.calculateBalance(month);
-            System.out.println("After Payment " + month + ": " + NumberFormat.getCurrencyInstance().format(balance));
+        var paymentNumber = 0;
+        for (double balance : mortgage.getRemainingBalances()) {
+            paymentNumber++;
+            System.out.println("After Payment " + paymentNumber + ": " + NumberFormat.getCurrencyInstance().format(balance));
         }
     }
 

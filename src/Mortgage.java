@@ -1,20 +1,20 @@
 public class Mortgage {
-    final byte MONTHS_IN_YEAR = 12;
-    final byte PERCENT = 100;
+    private final byte MONTHS_IN_YEAR = 12;
+    private final byte PERCENT = 100;
 
     private int principal;
     private float annualInterestRate;
-    private int years;
+    private byte years;
 
-    public Mortgage(int principal, float annualInterestRate, int years) {
+    public Mortgage(int principal, float annualInterestRate, byte years) {
         setPrincipal(principal);
         setAnnualInterestRate(annualInterestRate);
         setYears(years);
     }
 
     public double calculateMortgage() {
-        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
-        int numberOfPayments = years * MONTHS_IN_YEAR;
+        float monthlyInterestRate = getMonthlyInterestRate();
+        int numberOfPayments = getNumberOfPayments();
 
         double mortgage = principal *
                 (monthlyInterestRate * Math.pow((1 + monthlyInterestRate), numberOfPayments))
@@ -25,8 +25,8 @@ public class Mortgage {
 
     public double calculateBalance(int numberOfPaymentsMade)
     {
-        float monthlyInterestRate = (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
-        int numberOfPayments = years * MONTHS_IN_YEAR;
+        float monthlyInterestRate = getMonthlyInterestRate();
+        int numberOfPayments = getNumberOfPayments();
 
         double remainingBalance = principal *
                 (Math.pow((1 + monthlyInterestRate), numberOfPayments) - Math.pow((1 + monthlyInterestRate), numberOfPaymentsMade)) /
@@ -47,13 +47,25 @@ public class Mortgage {
         this.annualInterestRate = annualInterestRate;
     }
 
-    private void setYears(int years) {
+    private void setYears(byte years) {
         if (years <= 0 )
             throw new IllegalArgumentException("Loan period in years cannot be 0 or less.");
         this.years = years;
     }
 
-    public int getYears() {
-        return years;
+    private int getNumberOfPayments() {
+        return years * MONTHS_IN_YEAR;
+    }
+
+    private float getMonthlyInterestRate() {
+        return (annualInterestRate / PERCENT) / MONTHS_IN_YEAR;
+    }
+
+    public double[] getRemainingBalances() {
+        double[] balances = new double[getNumberOfPayments()];
+        for (short paymentNumber = 1; paymentNumber <= balances.length; paymentNumber++)
+            balances[paymentNumber - 1] = calculateBalance(paymentNumber);
+
+        return balances;
     }
 }
