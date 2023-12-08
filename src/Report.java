@@ -1,17 +1,19 @@
 import java.text.NumberFormat;
 
 public class Report {
+    private final NumberFormat currency;
     private Mortgage mortgage;
 
     public Report(Mortgage mortgage) {
         setMortgage(mortgage);
+        currency = NumberFormat.getCurrencyInstance();
         printMortgage();
         printBalance();
     }
 
     private void printMortgage() {
         System.out.println("\nMORTGAGE\n--------");
-        String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage.calculateMortgage());
+        String formattedResult = currency.format(mortgage.calculateMortgage());
         System.out.println("Monthly Payments: " + formattedResult);
     }
 
@@ -20,7 +22,7 @@ public class Report {
         var paymentNumber = 0;
         for (double balance : mortgage.getRemainingBalances()) {
             paymentNumber++;
-            System.out.println("After Payment " + paymentNumber + ": " + NumberFormat.getCurrencyInstance().format(balance));
+            System.out.println("After Payment " + paymentNumber + ": " + currency.format(balance));
         }
     }
 
